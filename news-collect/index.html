@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>News Resume</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+        Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+    }
+
+    .news {
+      padding: 24px;
+      max-width: 1288px;
+      margin: 0 auto;
+      width: 100%;
+      box-sizing: border-box;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+    }
+
+    .news ul {
+      padding: 0px 24px 24px;
+      box-sizing: border-box;
+      border: 1px solid #d3d3d3;
+      border-radius: 10px;
+    }
+
+    .news li b {
+      padding: 18px 0 6px;
+      display: block;
+      font-size: 18px;
+      font-weight: 700;
+      color: #ff5d5d;
+    }
+
+    .news li {
+      padding: 6px 0;
+      border-bottom: 1px solid rgb(240, 240, 240);
+    }
+
+    .news li:last-of-type,
+    .news li:first-of-type {
+      border: none;
+    }
+
+    .news a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="news-container">
+    <div class="news-wrapper">
+      <div class="news">
+        <!--News will render here-->
+      </div>
+    </div>
+
+  </div>
+  <script>
+    function constructCmNews(jsonPath, articlesTitle) {
+      fetch(jsonPath)
+        .then((response) => response.json())
+        .then((json) => {
+          construct(json);
+        });
+      function construct(array) {
+        let ulInit = `<ul><li><b>${articlesTitle}</b></li>`;
+        let ulInner = ``;
+        let ulEnd = `</ul>`;
+        array.forEach(function (element) {
+          ulInner = ulInner + `<li><a href="${element.href}" target="_blank">${element.text}</a></li>`
+        });
+        document.querySelector(".news").insertAdjacentHTML("beforeend", `${ulInit}${ulInner}${ulEnd}`);
+      }
+    }
+    constructCmNews("news_paginaum.json", "Página Um");
+    constructCmNews("news_cmjornal.json", "CM Jornal");
+    constructCmNews("news_publico.json", "Público");
+    //constructCmNews("news_observador.json", "Observador");
+    constructCmNews("news_nytimes.json", "New York Times");
+    constructCmNews("news_diariodosul.json", "Diário do Sul");
+    constructCmNews("news_evora_cm.json", "Câmara Évora");
+  </script>
+</body>
+
+</html>
